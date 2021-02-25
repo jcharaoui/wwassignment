@@ -25,7 +25,14 @@ function xmldb_wwassignment_upgrade($oldversion) {
 
     $dbman = $DB->get_manager(); /// loads ddl manager and xmldb classes
 
-    // I've used the version I got: 2015022101 .
+    if ($oldversion < 2015030920){
+        $table = new xmldb_table('wwassignment');
+        $field = new xmldb_field('ww_set_type', XMLDB_TYPE_INTEGER, '4', null, XMLDB_NOTNULL, null, '0', 'webwork_set');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+           upgrade_mod_savepoint(true, 2015030920, 'wwassignment');
+    }
 
     if ($oldversion < 2015030906){
         $table = new xmldb_table('wwassignment');

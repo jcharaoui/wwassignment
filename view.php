@@ -52,6 +52,7 @@ if($USER->username == 'guest') {  # this allows guests to view webwork (signed i
 //force login
 $courseid = $course->id;
 $wwassignmentid = $wwassignment->id;
+$wwtype = $wwassignment->ww_set_type;
 require_login($courseid );
 
 // set page values
@@ -78,11 +79,13 @@ $PAGE->set_cm($cm);
 $wwcoursename = _wwassignment_mapped_course($courseid,false);
 $wwusername = $USER->username;
 $wwsetname = $wwassignment->webwork_set;
+$wwsetname_type = $wwsetname;
+if ($wwtype == 1) $wwsetname_type = "quiz_mode/$wwsetname";
 _wwassignment_mapcreate_user($wwcoursename,$wwusername);
 _wwassignment_mapcreate_user_set($wwcoursename,$wwusername,$wwsetname);
 
 $wwkey = _wwassignment_login_user($wwcoursename,$wwusername);
-$wwsetlink = _wwassignment_link_to_set_auto_login($wwcoursename,$wwsetname,$wwusername,$wwkey);
+$wwsetlink = _wwassignment_link_to_set_auto_login($wwcoursename,$wwsetname_type,$wwusername,$wwkey);
 
 //add_to_log($course->id, "wwassignment", "view", "view.php?id=$cm->id", "$wwassignmentid",_wwassignment_cmid());
 

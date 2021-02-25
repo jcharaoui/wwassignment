@@ -61,6 +61,8 @@ class mod_wwassignment_mod_form extends moodleform_mod
         // $OUTPUT->help_icon('enablenotification','assignment');
         $mform->addHelpButton('webwork_set', 'webwork_set', 'wwassignment');
 
+        $mform->addElement('select','ww_set_type',get_string('webwork_set_type', 'wwassignment'),array(get_string('assignment', 'wwassignment'),get_string('quiz', 'wwassignment')));
+
         $this->standard_intro_elements();
 
         $features = new stdClass;
